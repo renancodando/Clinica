@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#f4efe6">
-  <meta name="description" content="Lípea Clínica de Estética em Gaspar/SC. Beleza, cuidado e bem-estar com atendimento próximo e agendamento pelo WhatsApp.">
+  <meta name="theme-color" content="#f3eee6">
+  <meta name="description" content="Lípea Clínica de Estética em Gaspar/SC. Cuidado, beleza e bem-estar com atendimento próximo e conversa pelo WhatsApp.">
   <title>Lípea — Clínica de Estética · Gaspar/SC</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,59 +12,154 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id="field" aria-hidden="true"></canvas>
-  <div class="noise" aria-hidden="true"></div>
-  <div class="progress" aria-hidden="true"><span></span></div>
-  <div class="cursor" aria-hidden="true"><span class="cursor-dot"></span><span class="cursor-label"></span></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
-  <header class="topbar">
-    <a class="identity magnetic" href="#inicio" aria-label="Lípea, início"><span class="identity-mark">L</span><span class="identity-type"><b>Lípea</b><small>clínica de estética</small></span></a>
-    <nav class="nav" aria-label="Navegação principal"><a href="#essencia" data-nav="essencia">Essência</a><a href="#cuidado" data-nav="cuidado">Cuidados</a><a href="#conversa" data-nav="conversa">Conversa</a><a href="#visita" data-nav="visita">Visita</a></nav>
-    <a class="top-cta magnetic" href="#conversa" data-cursor="agendar">Agendar <span>↗</span></a>
+  <header class="header" id="top">
+    <a class="brand magnetic" href="#inicio" aria-label="Lípea, início">
+      <span class="brand-mark">L</span>
+      <span class="brand-copy"><strong>Lípea</strong><small>clínica de estética</small></span>
+    </a>
+    <nav aria-label="Navegação principal">
+      <a href="#essencia">Essência</a>
+      <a href="#cuidado">Cuidados</a>
+      <a href="#conversa">Conversa</a>
+      <a href="#visita">Visita</a>
+    </nav>
+    <a class="header-cta magnetic" href="#conversa">Agendar <span>↗</span></a>
   </header>
 
   <main>
-    <section class="hero" id="inicio" data-section="inicio">
-      <div class="hero-stage">
-        <div class="hero-kicker reveal"><span class="status-dot"></span><span id="statusText">Clínica de estética · Gaspar/SC</span></div>
-        <h1 class="hero-title" aria-label="Lípea"><span class="word-l" data-depth=".08">Lí</span><span class="word-r" data-depth="-.06">pea</span></h1>
-        <div class="hero-subline reveal" data-delay="120"><p>Beleza, cuidado e bem-estar.</p><span></span><p>Sem pressa. Sem excesso.</p></div>
-        <div class="hero-sculpture" id="heroSculpture" aria-hidden="true"><div class="halo halo-a"></div><div class="halo halo-b"></div><div class="halo halo-c"></div><div class="skin-orb"><div class="orb-sheen"></div><div class="orb-line line-1"></div><div class="orb-line line-2"></div><div class="orb-line line-3"></div></div><span class="orb-caption cap-a">pele</span><span class="orb-caption cap-b">corpo</span><span class="orb-caption cap-c">presença</span></div>
-        <div class="hero-copy reveal" data-delay="180"><p>Você não precisa chegar sabendo o nome do procedimento. Comece pelo que quer sentir diferente.</p><a href="#cuidado" class="soft-link" data-cursor="explorar">Explorar cuidados <span>↓</span></a></div>
-        <div class="hero-foot reveal" data-delay="240"><div><small>01</small><span>Centro · Gaspar</span></div><div><small>02</small><span>Atendimento próximo</span></div><div><small>03</small><span>Conversa pelo WhatsApp</span></div></div>
+    <section class="hero" id="inicio">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span class="status-line"></span><span id="statusText">Atendimento em Gaspar</span></div>
+        <h1>Antes do procedimento,<br><em>existe você.</em></h1>
+        <p class="hero-lead">A Lípea começa pela escuta. Você chega com uma vontade, uma dúvida ou só a sensação de que quer se cuidar — e a conversa organiza o resto.</p>
+        <div class="hero-actions">
+          <a class="button button-dark magnetic" href="#cuidado">Descobrir meu cuidado <span>→</span></a>
+          <a class="text-link" href="#conversa">Ir direto ao WhatsApp <span>↘</span></a>
+        </div>
+        <div class="hero-facts">
+          <div><small>LOCAL</small><strong>Centro · Gaspar/SC</strong></div>
+          <div><small>SEG — SEX</small><strong>08h — 20h</strong></div>
+          <div><small>SÁBADO</small><strong>08h — 11h</strong></div>
+        </div>
       </div>
-      <div class="scroll-cue" aria-hidden="true"><span></span><small>role para entrar</small></div>
-    </section>
 
-    <section class="manifesto" id="essencia" data-section="essencia">
-      <div class="manifesto-rail"><p class="chapter">01 — essência</p><div class="rail-line"><span></span></div></div>
-      <div class="manifesto-content"><p class="manifesto-pre reveal">A Lípea não começa pelo procedimento.</p><h2 class="manifesto-title split reveal">Começa pela forma como você quer se sentir quando sair daqui.</h2><div class="manifesto-bottom"><p class="reveal">Menos ruído, mais escuta. Menos excesso, mais intenção. Uma experiência de cuidado pensada para ser simples de entender e boa de viver.</p><div class="principle-orbit reveal" aria-hidden="true"><span>naturalidade</span><span>clareza</span><span>presença</span><i></i></div></div></div>
-    </section>
-
-    <section class="care-world" id="cuidado" data-section="cuidado">
-      <div class="care-intro"><p class="chapter reveal">02 — escolha sem complicar</p><div><h2 class="reveal">O que você quer cuidar agora?</h2><p class="reveal" data-delay="90">Escolha uma intenção. A interface muda junto com você.</p></div></div>
-      <div class="care-universe reveal" id="careUniverse">
-        <div class="care-visual" aria-hidden="true"><div class="care-aura"></div><div class="care-core"><span id="careGlyph">01</span></div><div class="trace trace-a"></div><div class="trace trace-b"></div><div class="trace trace-c"></div></div>
-        <div class="care-nav" role="list" aria-label="Interesses de cuidado"><button class="care-choice active" data-care="pele" data-index="01" data-title="Pele" data-sub="Textura, viço, limpeza, hidratação ou apenas vontade de entender por onde começar." data-message="Pele / cuidados faciais" data-theme="sage" data-cursor="pele"><span>01</span><strong>Pele</strong><i>↗</i></button><button class="care-choice" data-care="corpo" data-index="02" data-title="Corpo" data-sub="Cuidados corporais, protocolos estéticos e uma conversa mais direcionada para o seu momento." data-message="Cuidados corporais" data-theme="clay" data-cursor="corpo"><span>02</span><strong>Corpo</strong><i>↗</i></button><button class="care-choice" data-care="bem-estar" data-index="03" data-title="Bem-estar" data-sub="Um momento para desacelerar, se perceber e transformar autocuidado em presença." data-message="Bem-estar / autocuidado" data-theme="sand" data-cursor="pausa"><span>03</span><strong>Bem-estar</strong><i>↗</i></button><button class="care-choice" data-care="orientacao" data-index="04" data-title="Quero orientação" data-sub="Você não precisa saber exatamente o que escolher. Às vezes a melhor primeira etapa é conversar." data-message="Ainda não sei e gostaria de orientação" data-theme="ink" data-cursor="orientar"><span>04</span><strong>Ainda não sei</strong><i>↗</i></button></div>
-        <div class="care-detail" id="careDetail"><div class="care-detail-top"><small>seleção atual</small><span id="careIndex">01</span></div><div><h3 id="careTitle">Pele</h3><p id="careText">Textura, viço, limpeza, hidratação ou apenas vontade de entender por onde começar.</p></div><a href="#conversa" class="care-forward magnetic" data-cursor="continuar">Levar para a conversa <span>→</span></a></div>
+      <div class="hero-visual reveal" data-delay="120">
+        <div class="skin-window" id="skinWindow">
+          <svg class="face-line" viewBox="0 0 540 720" role="img" aria-label="Ilustração abstrata de um rosto em traço contínuo">
+            <path class="draw-line main-line" d="M353 82C292 105 245 154 226 214c-23 73 4 126-8 178-12 49-55 76-63 127-11 73 38 121 95 136 62 16 139-5 179-65 31-47 38-112 18-163-15-38-47-60-51-105-5-52 30-94 24-148-4-42-27-79-67-92Z"/>
+            <path class="draw-line detail-line" d="M271 198c25 6 44 20 59 41M262 278c18 9 35 13 55 10M235 390c22 18 47 24 75 20M263 514c29 10 58 8 86-8"/>
+            <path class="draw-line contour-line" d="M152 597c74 25 128 13 173-22 33-26 58-63 94-74 34-11 65 1 92 23M93 633c97 42 196 34 272-19 63-44 115-74 179-46"/>
+          </svg>
+          <div class="scan scan-a"><span>pele</span><b></b></div>
+          <div class="scan scan-b"><span>presença</span><b></b></div>
+          <div class="scan scan-c"><span>cuidado</span><b></b></div>
+          <div class="skin-caption"><small>01 / leitura</small><p>Linhas, textura e camadas em vez de efeitos soltos. A estética nasce do próprio tema da clínica.</p></div>
+        </div>
       </div>
     </section>
 
-    <section class="interlude" aria-label="Mensagem"><div class="interlude-track" aria-hidden="true"><span>CUIDAR SEM COMPLICAR · BELEZA COM INTENÇÃO · CUIDAR SEM COMPLICAR · BELEZA COM INTENÇÃO ·</span></div><div class="interlude-center"><span class="interlude-number">03</span><p>Uma clínica nova também pode criar uma nova forma de receber.</p></div></section>
-
-    <section class="journey" data-section="jornada"><div class="journey-sticky"><div class="journey-copy"><p class="chapter">03 — da curiosidade à conversa</p><h2>O caminho até o atendimento deveria ser tão leve quanto o cuidado.</h2><p>Por isso, o site transforma dúvidas em uma conversa organizada — sem formulários frios e sem etapas desnecessárias.</p></div><div class="journey-scenes" id="journeyScenes"><article class="scene active" data-scene="0"><span>01</span><div><small>perceba</small><h3>Escolha o que mais se aproxima do seu momento.</h3></div></article><article class="scene" data-scene="1"><span>02</span><div><small>conte</small><h3>Diga quando consegue ir e o que gostaria de entender melhor.</h3></div></article><article class="scene" data-scene="2"><span>03</span><div><small>converse</small><h3>Chegue no WhatsApp com tudo organizado — e ainda revise antes de enviar.</h3></div></article></div><div class="journey-meter" aria-hidden="true"><span></span></div></div></section>
-
-    <section class="conversation" id="conversa" data-section="conversa">
-      <div class="conversation-head"><p class="chapter reveal">04 — sua conversa</p><h2 class="reveal">Menos formulário.<br><em>Mais contexto.</em></h2><p class="reveal" data-delay="90">Monte sua mensagem em poucos toques. Nada é enviado automaticamente.</p></div>
-      <div class="conversation-app reveal" data-delay="120"><div class="builder"><div class="builder-row"><div class="builder-label"><span>01</span><p>O que você procura?</p></div><div class="options" id="interestOptions"><button class="pill selected" data-value="Pele / cuidados faciais">Pele</button><button class="pill" data-value="Cuidados corporais">Corpo</button><button class="pill" data-value="Bem-estar / autocuidado">Bem-estar</button><button class="pill" data-value="Ainda não sei e gostaria de orientação">Ainda não sei</button></div></div><div class="builder-row"><div class="builder-label"><span>02</span><p>Quais dias funcionam?</p></div><div class="options compact" id="dayOptions"><button class="pill" data-value="segunda">Seg</button><button class="pill" data-value="terça">Ter</button><button class="pill" data-value="quarta">Qua</button><button class="pill" data-value="quinta">Qui</button><button class="pill" data-value="sexta">Sex</button><button class="pill" data-value="sábado">Sáb</button></div></div><div class="builder-row"><div class="builder-label"><span>03</span><p>Melhor período?</p></div><div class="options" id="timeOptions"><button class="pill selected" data-value="pela manhã">Manhã</button><button class="pill" data-value="à tarde">Tarde</button><button class="pill" data-value="no fim da tarde / início da noite">Fim do dia</button><button class="pill" data-value="tenho flexibilidade de horário">Flexível</button></div></div><div class="builder-row note-row"><div class="builder-label"><span>04</span><p>Quer contar algo?</p></div><label class="note-wrap"><textarea id="note" maxlength="240" rows="4" placeholder="Ex.: é minha primeira vez em uma clínica de estética e queria entender por onde começar."></textarea><small><b id="noteCount">0</b>/240</small></label></div></div><aside class="preview" id="previewCard"><div class="preview-status"><span></span><small>prévia da conversa</small></div><div class="preview-recipient"><div class="preview-avatar">L</div><div><strong>Lípea</strong><small>WhatsApp</small></div></div><p id="messagePreview"></p><a class="whatsapp magnetic" id="whatsappBtn" href="https://wa.me/5547999753853" target="_blank" rel="noopener" data-cursor="abrir">Abrir no WhatsApp <span>↗</span></a><small class="safe-note">Você confere tudo antes de enviar.</small></aside></div>
+    <section class="essence" id="essencia">
+      <div class="section-tag reveal">01 / essência</div>
+      <div class="essence-grid">
+        <h2 class="reveal">Cuidado não precisa parecer complicado para ser <em>bem pensado.</em></h2>
+        <div class="essence-copy reveal" data-delay="100">
+          <p>O site não tenta empurrar uma lista de procedimentos. Primeiro ele ajuda a pessoa a reconhecer o que procura. Depois, transforma isso em uma conversa clara.</p>
+          <div class="micro-proof"><span>menos dúvida</span><i>→</i><span>mais contexto</span><i>→</i><span>contato melhor</span></div>
+        </div>
+      </div>
+      <div class="skin-strata reveal" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
     </section>
 
-    <section class="visit" id="visita" data-section="visita"><div class="visit-top"><p class="chapter reveal">05 — visita</p><h2 class="reveal">No centro de Gaspar.<br><em>Fácil de encontrar.</em></h2></div><div class="visit-grid"><div class="visit-info reveal"><div class="address"><small>endereço</small><p>Rua Augusto Beduschi, 87<br>2º andar · sala 209<br>Centro · Gaspar/SC</p></div><div class="visit-links"><a class="visit-action magnetic" href="https://www.google.com/maps/search/?api=1&query=Rua+Augusto+Beduschi+87+Sala+209+Gaspar+SC" target="_blank" rel="noopener" data-cursor="rota">Traçar rota <span>↗</span></a><a href="https://instagram.com/lipeaestetica" target="_blank" rel="noopener">@lipeaestetica <span>↗</span></a><a href="https://linktr.ee/lipeaestetica" target="_blank" rel="noopener">Portfólio oficial <span>↗</span></a></div><div class="hours"><div><span>Seg — Sex</span><strong>08h — 20h</strong></div><div><span>Sábado</span><strong>08h — 11h</strong></div><div><span>Domingo</span><strong>Fechado</strong></div></div></div><div class="map-shell reveal" data-delay="100"><iframe title="Mapa da Lípea Clínica de Estética" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Rua%20Augusto%20Beduschi%2087%20Sala%20209%20Gaspar%20SC&output=embed"></iframe><div class="map-overlay" aria-hidden="true"><span>Lípea</span><small>sala 209</small></div></div></div></section>
+    <section class="care" id="cuidado">
+      <div class="care-head">
+        <div><p class="section-tag reveal">02 / seu momento</p><h2 class="reveal">Escolha pelo que você sente.</h2></div>
+        <p class="reveal" data-delay="80">Sem precisar saber o nome de um procedimento. Você escolhe a intenção; o site organiza a conversa.</p>
+      </div>
 
-    <section class="closing"><div class="closing-orb" aria-hidden="true"></div><p>Se cuidar pode começar com uma conversa.</p><a href="#conversa" class="closing-link magnetic" data-cursor="começar">Começar agora <span>↗</span></a><div class="closing-word" aria-hidden="true">Lípea</div></section>
+      <div class="care-layout reveal">
+        <div class="care-list" role="list" aria-label="Áreas de interesse">
+          <button class="care-item active" data-index="01" data-title="Pele" data-message="Pele / cuidados faciais" data-copy="Quero cuidar de textura, viço, limpeza, hidratação ou entender melhor o que minha pele precisa." data-mode="skin"><span>01</span><strong>Pele</strong><small>textura · viço · cuidado</small><i>↗</i></button>
+          <button class="care-item" data-index="02" data-title="Corpo" data-message="Cuidados corporais" data-copy="Quero conversar sobre cuidados corporais e possibilidades que façam sentido para meu momento." data-mode="body"><span>02</span><strong>Corpo</strong><small>cuidado · intenção · rotina</small><i>↗</i></button>
+          <button class="care-item" data-index="03" data-title="Bem-estar" data-message="Bem-estar / autocuidado" data-copy="Quero reservar um momento para desacelerar, me cuidar e me sentir melhor." data-mode="wellness"><span>03</span><strong>Bem-estar</strong><small>pausa · presença · leveza</small><i>↗</i></button>
+          <button class="care-item" data-index="04" data-title="Orientação" data-message="Ainda não sei e gostaria de orientação" data-copy="Ainda não sei exatamente por onde começar. Prefiro conversar e receber uma orientação inicial." data-mode="guide"><span>04</span><strong>Ainda não sei</strong><small>escuta · direção · conversa</small><i>↗</i></button>
+        </div>
+
+        <article class="care-detail" id="careDetail" data-mode="skin">
+          <div class="care-detail-top"><span id="careIndex">01</span><small>seleção atual</small></div>
+          <div class="care-detail-copy"><h3 id="careTitle">Pele</h3><p id="careText">Quero cuidar de textura, viço, limpeza, hidratação ou entender melhor o que minha pele precisa.</p></div>
+          <div class="care-line-art" aria-hidden="true">
+            <svg viewBox="0 0 600 260"><path id="carePath" d="M14 191C86 183 92 95 163 106c72 11 73 104 150 89 70-14 83-117 166-101 51 10 71 53 108 69"/></svg>
+          </div>
+          <a href="#conversa" class="button button-dark magnetic" id="carryCare">Levar para a conversa <span>→</span></a>
+        </article>
+      </div>
+    </section>
+
+    <section class="process" aria-label="Como funciona">
+      <div class="process-shell">
+        <div class="process-copy sticky-copy">
+          <p class="section-tag">03 / sem atrito</p>
+          <h2>Do “eu não sei” até uma conversa <em>bem encaminhada.</em></h2>
+          <p>Em vez de pedir para a pessoa decidir tudo sozinha, o site conduz em três passos simples.</p>
+        </div>
+        <div class="process-steps">
+          <article class="process-step reveal"><span>01</span><div><small>perceber</small><h3>Escolha o que mais se aproxima do seu momento.</h3><p>Pele, corpo, bem-estar ou orientação.</p></div></article>
+          <article class="process-step reveal"><span>02</span><div><small>contextualizar</small><h3>Conte quando consegue ir e o que gostaria de entender.</h3><p>Sem formulário frio e sem perguntas desnecessárias.</p></div></article>
+          <article class="process-step reveal"><span>03</span><div><small>conversar</small><h3>Abra o WhatsApp com a mensagem pronta — e revise antes de enviar.</h3><p>O contato começa com contexto, não do zero.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="conversation" id="conversa">
+      <div class="conversation-head">
+        <p class="section-tag reveal">04 / conversa</p>
+        <h2 class="reveal">Monte sua mensagem.<br><em>Sem formulário com cara de formulário.</em></h2>
+        <p class="reveal" data-delay="80">Tudo fica visível na hora. Nada é enviado automaticamente.</p>
+      </div>
+
+      <div class="conversation-app reveal" data-delay="120">
+        <div class="builder">
+          <div class="builder-group"><div class="builder-label"><span>01</span><div><small>interesse</small><strong>O que você procura?</strong></div></div><div class="chips" id="interestOptions"><button class="chip selected" data-value="Pele / cuidados faciais">Pele</button><button class="chip" data-value="Cuidados corporais">Corpo</button><button class="chip" data-value="Bem-estar / autocuidado">Bem-estar</button><button class="chip" data-value="Ainda não sei e gostaria de orientação">Ainda não sei</button></div></div>
+          <div class="builder-group"><div class="builder-label"><span>02</span><div><small>dias</small><strong>Quando costuma funcionar?</strong></div></div><div class="chips compact" id="dayOptions"><button class="chip" data-value="segunda">Seg</button><button class="chip" data-value="terça">Ter</button><button class="chip" data-value="quarta">Qua</button><button class="chip" data-value="quinta">Qui</button><button class="chip" data-value="sexta">Sex</button><button class="chip" data-value="sábado">Sáb</button></div></div>
+          <div class="builder-group"><div class="builder-label"><span>03</span><div><small>horário</small><strong>Qual período é melhor?</strong></div></div><div class="chips" id="timeOptions"><button class="chip selected" data-value="pela manhã">Manhã</button><button class="chip" data-value="à tarde">Tarde</button><button class="chip" data-value="no fim da tarde / início da noite">Fim do dia</button><button class="chip" data-value="tenho flexibilidade de horário">Flexível</button></div></div>
+          <div class="builder-group"><div class="builder-label"><span>04</span><div><small>opcional</small><strong>Quer contar algo?</strong></div></div><label class="note"><textarea id="note" maxlength="240" rows="4" placeholder="Ex.: é minha primeira vez em uma clínica de estética e queria entender por onde começar."></textarea><span><b id="noteCount">0</b>/240</span></label></div>
+        </div>
+
+        <aside class="preview-card">
+          <div class="preview-top"><div class="preview-avatar">L</div><div><small>mensagem pronta</small><strong>Lípea · WhatsApp</strong></div></div>
+          <p id="messagePreview"></p>
+          <a id="whatsappBtn" class="whatsapp magnetic" href="https://wa.me/5547999753853" target="_blank" rel="noopener">Abrir no WhatsApp <span>↗</span></a>
+          <small class="privacy">Você confere a mensagem antes de enviar.</small>
+        </aside>
+      </div>
+    </section>
+
+    <section class="visit" id="visita">
+      <div class="visit-head"><p class="section-tag reveal">05 / visita</p><h2 class="reveal">No centro de Gaspar.<br><em>Sem complicação para chegar.</em></h2></div>
+      <div class="visit-grid">
+        <div class="visit-info reveal">
+          <div><small>endereço</small><p>Rua Augusto Beduschi, 87<br>2º andar · sala 209<br>Centro · Gaspar/SC</p></div>
+          <div class="hours"><div><span>Seg — Sex</span><strong>08h — 20h</strong></div><div><span>Sábado</span><strong>08h — 11h</strong></div><div><span>Domingo</span><strong>Fechado</strong></div></div>
+          <div class="visit-actions"><a class="button button-light magnetic" href="https://www.google.com/maps/search/?api=1&query=Rua+Augusto+Beduschi+87+Sala+209+Gaspar+SC" target="_blank" rel="noopener">Traçar rota <span>↗</span></a><a class="text-link light" href="https://instagram.com/lipeaestetica" target="_blank" rel="noopener">@lipeaestetica <span>↗</span></a></div>
+        </div>
+        <div class="map-frame reveal" data-delay="80"><iframe title="Mapa da Lípea Clínica de Estética" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Rua%20Augusto%20Beduschi%2087%20Sala%20209%20Gaspar%20SC&output=embed"></iframe><div class="map-label"><strong>Lípea</strong><span>sala 209 · Centro</span></div></div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="closing-line" aria-hidden="true"><svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path d="M0 134C213 29 361 193 589 101c232-93 378-22 522 42 126 56 237 37 329-31"/></svg></div>
+      <p>Se cuidar pode começar com uma conversa.</p>
+      <a href="#conversa" class="closing-link magnetic">Começar agora <span>↗</span></a>
+      <div class="closing-word" aria-hidden="true">Lípea</div>
+    </section>
   </main>
 
-  <footer><div class="footer-left"><span class="identity-mark">L</span><div><strong>Lípea</strong><small>beleza, cuidado e bem-estar</small></div></div><div class="footer-center">Gaspar · Santa Catarina</div><div class="footer-right"><a href="https://instagram.com/lipeaestetica" target="_blank" rel="noopener">Instagram</a><a href="https://wa.me/5547999753853" target="_blank" rel="noopener">WhatsApp</a></div></footer>
+  <footer><div class="footer-brand"><span class="brand-mark">L</span><div><strong>Lípea</strong><small>beleza, cuidado e bem-estar</small></div></div><div class="footer-mid">Gaspar · Santa Catarina</div><div class="footer-links"><a href="https://instagram.com/lipeaestetica" target="_blank" rel="noopener">Instagram</a><a href="https://linktr.ee/lipeaestetica" target="_blank" rel="noopener">Portfólio</a><a href="https://wa.me/5547999753853" target="_blank" rel="noopener">WhatsApp</a></div></footer>
   <a class="mobile-cta" href="#conversa">Agendar <span>↗</span></a>
   <script src="app.js"></script>
 </body>
