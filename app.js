@@ -1,116 +1,28 @@
 const $=(s,c=document)=>c.querySelector(s), $$=(s,c=document)=>[...c.querySelectorAll(s)];
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const coarse=matchMedia('(pointer:coarse)').matches;
 const state={interest:'Pele / cuidados faciais',days:[],time:'pela manhã',note:''};
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function splitText(){
-  $$('.split').forEach(el=>{
-    if(el.dataset.split)return;
-    el.dataset.split='1';
-    const nodes=[...el.childNodes],frag=document.createDocumentFragment();
-    nodes.forEach(node=>{
-      if(node.nodeType===3){
-        node.textContent.split(/(\s+)/).forEach(part=>{
-          if(/^\s+$/.test(part)){frag.append(document.createTextNode(part));return}
-          if(!part)return;
-          const word=document.createElement('span'),inner=document.createElement('span');
-          word.className='word';inner.textContent=part;word.append(inner);frag.append(word);
-        });
-      }else frag.append(node.cloneNode(true));
-    });
-    el.replaceChildren(frag);
-  });
-}
+function reveal(){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});$$('.reveal').forEach(el=>{el.style.setProperty('--delay',`${el.dataset.delay||0}ms`);io.observe(el)})}
 
-function reveals(){
-  const io=new IntersectionObserver(entries=>entries.forEach(entry=>{
-    if(entry.isIntersecting){entry.target.classList.add('visible');io.unobserve(entry.target)}
-  }),{threshold:.12});
-  $$('.reveal,.split').forEach((el,i)=>{el.style.setProperty('--delay',`${Math.min((i%4)*55,165)}ms`);io.observe(el)});
-}
+function cursor(){if(coarse)return;const el=$('.cursor'),label=$('.cursor-label');let tx=innerWidth/2,ty=innerHeight/2,x=tx,y=ty;addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY});const loop=()=>{x+=(tx-x)*.16;y+=(ty-y)*.16;el.style.transform=`translate(${x}px,${y}px) translate(-50%,-50%)`;requestAnimationFrame(loop)};loop();$$('[data-cursor],a,button,textarea').forEach(t=>{t.addEventListener('mouseenter',()=>{const text=t.dataset.cursor||'';if(text){label.textContent=text;el.classList.add('active')}});t.addEventListener('mouseleave',()=>el.classList.remove('active'))})}
 
-function cursor(){
-  if(matchMedia('(pointer:coarse)').matches)return;
-  const c=$('.cursor'),glow=$('.pointer-glow');let x=innerWidth/2,y=innerHeight/2,cx=x,cy=y;
-  addEventListener('pointermove',e=>{x=e.clientX;y=e.clientY;glow.style.transform=`translate(${x}px,${y}px) translate(-50%,-50%)`});
-  const loop=()=>{cx+=(x-cx)*.18;cy+=(y-cy)*.18;c.style.transform=`translate(${cx}px,${cy}px) translate(-50%,-50%)`;requestAnimationFrame(loop)};loop();
-  $$('a,button,textarea').forEach(el=>{el.addEventListener('mouseenter',()=>c.classList.add('hover'));el.addEventListener('mouseleave',()=>c.classList.remove('hover'))});
-}
+function magnetic(){if(coarse||reduced)return;$$('.magnetic').forEach(el=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2;el.style.transform=`translate(${dx*.08}px,${dy*.08}px)`});el.addEventListener('pointerleave',()=>el.style.transform='')})}
 
-function magnetic(){
-  if(matchMedia('(pointer:coarse)').matches)return;
-  $$('.magnetic').forEach(el=>{
-    el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2;el.style.transform=`translate(${dx*.08}px,${dy*.08}px)`});
-    el.addEventListener('pointerleave',()=>el.style.transform='');
-  });
-}
+function heroDepth(){if(coarse||reduced)return;const sculpt=$('#heroSculpture'),stage=$('.hero-stage'),parts=$$('.hero-title [data-depth]');stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect(),nx=(e.clientX-r.left)/r.width-.5,ny=(e.clientY-r.top)/r.height-.5;sculpt.style.transform=`translate(-50%,-48%) rotateX(${-ny*6}deg) rotateY(${nx*8}deg)`;parts.forEach(p=>{const d=Number(p.dataset.depth);p.style.transform=`translate(${nx*d*110}px,${ny*d*70}px)`})});stage.addEventListener('pointerleave',()=>{sculpt.style.transform='translate(-50%,-48%)';parts.forEach(p=>p.style.transform='')})}
 
-function heroParallax(){
-  const scene=$('#heroScene');if(!scene||matchMedia('(pointer:coarse)').matches||reduce)return;
-  addEventListener('pointermove',e=>{const x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;scene.style.transform=`perspective(1000px) rotateX(${-y*4}deg) rotateY(${x*6}deg) translate3d(${x*8}px,${y*8}px,0)`});
-}
+function scrollSystem(){const progress=$('.progress span'),meter=$('.journey-meter span'),journey=$('.journey'),scenes=$$('.scene'),navLinks=$$('.nav a');let ticking=false;const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.transform=`scaleX(${max?scrollY/max:0})`;if(journey){const r=journey.getBoundingClientRect(),total=journey.offsetHeight-innerHeight,p=Math.min(1,Math.max(0,-r.top/Math.max(1,total)));meter.style.transform=`scaleX(${p})`;const idx=Math.min(2,Math.floor(p*3));scenes.forEach((s,i)=>s.classList.toggle('active',i===idx))}const sections=$$('[data-section]');let active='';sections.forEach(s=>{const r=s.getBoundingClientRect();if(r.top<=innerHeight*.46&&r.bottom>=innerHeight*.46)active=s.dataset.section});navLinks.forEach(a=>a.classList.toggle('active',a.dataset.nav===active));ticking=false};addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(update);ticking=true}},{passive:true});update()}
 
-function scrollUI(){
-  const bar=$('.scroll-progress span'),header=$('.header');
-  const update=()=>{const h=document.documentElement.scrollHeight-innerHeight;bar.style.transform=`scaleX(${h?scrollY/h:0})`;header.classList.toggle('scrolled',scrollY>40)};
-  addEventListener('scroll',update,{passive:true});update();
-}
+function care(){const title=$('#careTitle'),text=$('#careText'),index=$('#careIndex'),glyph=$('#careGlyph');$$('.care-choice').forEach(btn=>btn.addEventListener('click',()=>{$$('.care-choice').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.body.classList.remove('theme-clay','theme-sand','theme-ink');if(btn.dataset.theme!=='sage')document.body.classList.add(`theme-${btn.dataset.theme}`);[title,text,index,glyph].forEach(el=>el.animate([{opacity:.15,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:450,easing:'cubic-bezier(.22,1,.36,1)'}));title.textContent=btn.dataset.title;text.textContent=btn.dataset.sub;index.textContent=btn.dataset.index;glyph.textContent=btn.dataset.index;state.interest=btn.dataset.message;syncInterest(btn.dataset.message);updateMessage()}))}
 
-function manifestoFlow(){
-  const cards=$$('.flow-card');if(!cards.length)return;
-  const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){cards.forEach(c=>c.classList.remove('active'));entry.target.classList.add('active')}}),{threshold:.58});
-  cards.forEach(c=>io.observe(c));cards[0].classList.add('active');
-}
+function syncInterest(value){$$('#interestOptions .pill').forEach(p=>p.classList.toggle('selected',p.dataset.value===value))}
+function single(container,key){$$('.pill',container).forEach(btn=>btn.addEventListener('click',()=>{$$('.pill',container).forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');state[key]=btn.dataset.value;updateMessage()}))}
+function multi(container){$$('.pill',container).forEach(btn=>btn.addEventListener('click',()=>{btn.classList.toggle('selected');state.days=$$('.pill.selected',container).map(b=>b.dataset.value);updateMessage()}))}
+function updateMessage(){const days=state.days.length?state.days.join(', '):'a combinar';const extra=state.note.trim()?`\nTambém queria comentar: ${state.note.trim()}`:'';const msg=`Olá! Vi o site da Lípea e gostaria de conversar sobre um atendimento.\n\nMeu interesse hoje é: ${state.interest}.\nOs dias que costumam funcionar para mim: ${days}.\nQuanto ao horário, prefiro ${state.time}.${extra}\n\nVocês conseguem me orientar sobre o melhor caminho para começar?`;$('#messagePreview').textContent=msg;$('#whatsappBtn').href=`https://wa.me/5547999753853?text=${encodeURIComponent(msg)}`}
+function builder(){single($('#interestOptions'),'interest');single($('#timeOptions'),'time');multi($('#dayOptions'));const note=$('#note');note.addEventListener('input',()=>{state.note=note.value;$('#noteCount').textContent=note.value.length;updateMessage()});updateMessage()}
 
-function care(){
-  const stage=$('#careStage'),title=$('.stage-copy h3',stage),copy=$('.stage-copy p',stage),num=$('.stage-number',stage),art=$('.stage-art',stage);
-  const interests={pele:'Pele / cuidados faciais',corpo:'Cuidados corporais','bem-estar':'Bem-estar / autocuidado',orientacao:'Ainda não sei e gostaria de orientação'};
-  const colors={pele:['#b8c5b5','#7f9b85'],corpo:['#d9c4a2','#c98c70'],'bem-estar':['#d9c4a2','#b8c5b5'],orientacao:['#b8c5b5','#a8b0aa']};
-  $$('.care-tab').forEach(btn=>btn.addEventListener('click',()=>{
-    $$('.care-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
-    [title,copy,num].forEach(el=>el.animate([{opacity:.2,transform:'translateY(12px)'},{opacity:1,transform:'none'}],{duration:480,easing:'cubic-bezier(.22,1,.36,1)'}));
-    title.textContent=btn.dataset.title;copy.textContent=btn.dataset.copy;num.textContent=btn.dataset.index;
-    const [a,b]=colors[btn.dataset.care]||colors.pele;
-    art.animate([{filter:'saturate(.8)',transform:'scale(.96)'},{filter:'saturate(1)',transform:'scale(1)'}],{duration:520,easing:'cubic-bezier(.22,1,.36,1)'});
-    art.querySelector('span').style.background=`radial-gradient(circle at 34% 30%,rgba(255,255,255,.92),${a}88 48%,${b}26 70%,transparent 72%)`;
-    state.interest=interests[btn.dataset.care];
-    const matching=$$('#interestChips .chip').find(c=>c.dataset.value===state.interest);
-    if(matching){$$('#interestChips .chip').forEach(c=>c.classList.remove('selected'));matching.classList.add('selected')}
-    updateMessage();
-  }));
-}
+function status(){const out=$('#statusText');try{const f=new Intl.DateTimeFormat('en-US',{timeZone:'America/Sao_Paulo',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false});const p=Object.fromEntries(f.formatToParts(new Date()).map(x=>[x.type,x.value])),h=Number(p.hour)+Number(p.minute)/60;const open=(['Mon','Tue','Wed','Thu','Fri'].includes(p.weekday)&&h>=8&&h<20)||(p.weekday==='Sat'&&h>=8&&h<11);out.textContent=open?'Aberto agora · Gaspar/SC':'Clínica de estética · Gaspar/SC'}catch{}}
 
-function single(container,key){
-  $$('.chip',container).forEach(ch=>ch.addEventListener('click',()=>{$$('.chip',container).forEach(c=>c.classList.remove('selected'));ch.classList.add('selected');state[key]=ch.dataset.value;updateMessage()}));
-}
-function multi(container){
-  $$('.chip',container).forEach(ch=>ch.addEventListener('click',()=>{ch.classList.toggle('selected');state.days=$$('.chip.selected',container).map(c=>c.dataset.value);updateMessage()}));
-}
-function updateMessage(){
-  const days=state.days.length?state.days.join(', '):'a combinar';
-  const extra=state.note.trim()?`\nTambém queria comentar: ${state.note.trim()}`:'';
-  const msg=`Olá! Vi o site da Lípea e gostaria de conversar sobre um atendimento.\n\nMeu interesse hoje é: ${state.interest}.\nOs dias que costumam funcionar para mim: ${days}.\nQuanto ao horário, prefiro ${state.time}.${extra}\n\nVocês conseguem me orientar sobre o melhor caminho para começar?`;
-  $('#messagePreview').textContent=msg;$('#whatsappBtn').href=`https://wa.me/5547999753853?text=${encodeURIComponent(msg)}`;
-}
-function builder(){
-  single($('#interestChips'),'interest');single($('#timeChips'),'time');multi($('#dayChips'));
-  const note=$('#note');note.addEventListener('input',()=>{state.note=note.value;$('#noteCount').textContent=note.value.length;updateMessage()});updateMessage();
-}
+function canvas(){if(reduced)return;const c=$('#field'),ctx=c.getContext('2d');let w=0,h=0,dpr=1,t=0,mouse={x:.5,y:.5};const resize=()=>{w=innerWidth;h=innerHeight;dpr=Math.min(devicePixelRatio,2);c.width=w*dpr;c.height=h*dpr;c.style.width=`${w}px`;c.style.height=`${h}px`;ctx.setTransform(dpr,0,0,dpr,0,0)};resize();addEventListener('resize',resize);addEventListener('pointermove',e=>{mouse.x=e.clientX/w;mouse.y=e.clientY/h},{passive:true});const dots=Array.from({length:34},(_,i)=>({a:i/34*Math.PI*2,r:.16+Math.random()*.34,s:.15+Math.random()*.25,z:.2+Math.random()*.8}));const draw=()=>{t+=.003;ctx.clearRect(0,0,w,h);const cx=(.5+(mouse.x-.5)*.035)*w,cy=(.48+(mouse.y-.5)*.03)*h;dots.forEach(d=>{const rr=d.r*Math.min(w,h)*(1+Math.sin(t*2+d.a)*.05),a=d.a+t*d.s;const x=cx+Math.cos(a)*rr,y=cy+Math.sin(a*1.13)*rr*.7;ctx.beginPath();ctx.arc(x,y,Math.max(.6,1.4*d.z),0,Math.PI*2);ctx.fillStyle=`rgba(83,105,92,${.04+.07*d.z})`;ctx.fill()});const g=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(w,h)*.48);g.addColorStop(0,'rgba(142,164,143,.055)');g.addColorStop(1,'rgba(142,164,143,0)');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);requestAnimationFrame(draw)};draw()}
 
-function status(){
-  const out=$('#heroStatus');
-  const fmt=new Intl.DateTimeFormat('en-US',{timeZone:'America/Sao_Paulo',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false});
-  const parts=Object.fromEntries(fmt.formatToParts(new Date()).map(x=>[x.type,x.value]));
-  const h=Number(parts.hour)+Number(parts.minute)/60;
-  const open=(['Mon','Tue','Wed','Thu','Fri'].includes(parts.weekday)&&h>=8&&h<20)||(parts.weekday==='Sat'&&h>=8&&h<11);
-  out.textContent=open?'aberto agora':'atendimento em Gaspar';
-}
-
-function canvas(){
-  const c=$('#ambient'),ctx=c.getContext('2d');let w,h,t=0,dpr=Math.min(devicePixelRatio,2);
-  const blobs=[{x:.13,y:.13,r:.25,c:'127,155,133',a:.12,s:.75},{x:.84,y:.24,r:.21,c:'201,140,112',a:.075,s:.95},{x:.66,y:.79,r:.3,c:'217,196,162',a:.11,s:.55},{x:.25,y:.72,r:.18,c:'184,197,181',a:.08,s:.7}];
-  const resize=()=>{w=innerWidth;h=innerHeight;c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0)};resize();addEventListener('resize',resize);
-  const draw=()=>{t+=.0025;ctx.clearRect(0,0,w,h);blobs.forEach((b,i)=>{const x=(b.x+Math.sin(t*b.s+i)*.045)*w,y=(b.y+Math.cos(t*b.s*.8+i)*.04)*h,r=b.r*Math.min(w,h)*1.9,g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(${b.c},${b.a})`);g.addColorStop(1,`rgba(${b.c},0)`);ctx.fillStyle=g;ctx.fillRect(x-r,y-r,r*2,r*2)});requestAnimationFrame(draw)};
-  if(!reduce)draw();
-}
-
-splitText();reveals();cursor();magnetic();heroParallax();scrollUI();manifestoFlow();care();builder();status();canvas();
+reveal();cursor();magnetic();heroDepth();scrollSystem();care();builder();status();canvas();
